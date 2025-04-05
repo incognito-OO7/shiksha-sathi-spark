@@ -3,7 +3,6 @@ import React from 'react';
 import { Bell, Search, Wifi, WifiOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   className?: string;
@@ -35,20 +34,16 @@ const Header = ({ className, sidebarCollapsed = false, online = true }: HeaderPr
       className
     )}>
       <div className="flex items-center md:ml-4">
-        <Link to="/" className="relative mr-2">
+        <div className="relative mr-2 md:hidden">
           <div className="flex items-center space-x-2">
             <span className="font-bold text-ss-blue-600 text-xl">शिक्षा</span>
             <span className="font-semibold text-gray-800 text-xl">साथी</span>
           </div>
-        </Link>
+        </div>
         <h1 className="text-lg font-medium text-gray-800 mt-1 hidden md:block">Class Dashboard</h1>
       </div>
       
       <div className="flex items-center space-x-4">
-        <div className="hidden md:flex items-center space-x-3">
-          <img src="/lovable-uploads/b4b56bd7-880f-4a5a-aacb-57ebf6d3723a.png" alt="Partner Logos" className="h-6 object-contain" />
-        </div>
-        
         <div className="border border-gray-200 rounded-full p-1 flex items-center space-x-1 cursor-pointer" onClick={handleConnectionToggle}>
           {online ? (
             <>
