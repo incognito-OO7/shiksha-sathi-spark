@@ -10,7 +10,11 @@ import {
   MessageSquare, 
   Settings, 
   Menu, 
-  ArrowLeft
+  ArrowLeft,
+  Bot,
+  Globe,
+  Radio,
+  Info
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -36,12 +40,22 @@ const Sidebar = ({ className }: SidebarProps) => {
     setMobileMenuOpen(false);
   };
   
-  const routes = [
+  const mainRoutes = [
     { path: "/", label: "Class Dashboard", icon: BookOpen },
     { path: "/assessment", label: "Assessment", icon: BarChart3 },
     { path: "/record-class", label: "Record Class", icon: Headphones },
     { path: "/parent-connect", label: "Parent Connect", icon: MessageSquare, badge: 2 },
     { path: "/students", label: "Students", icon: Users },
+  ];
+  
+  const solutionRoutes = [
+    { path: "/solution-overview", label: "Solution Overview", icon: Info },
+    { path: "/adhyayan-mitra", label: "Adhyayan Mitra", icon: Bot },
+    { path: "/vidhyarthi-vault", label: "Vidhyarthi Vault", icon: BookOpen },
+    { path: "/guru-pragati", label: "Guru Pragati", icon: Users },
+    { path: "/samudaya-sangam", label: "Samudaya Sangam", icon: Radio },
+    { path: "/shiksha-nirikshan", label: "Shiksha Nirikshan", icon: BarChart3 },
+    { path: "/nep-buddy", label: "NEP Buddy", icon: Globe },
   ];
   
   const SidebarItem = ({ icon: Icon, label, path, active = false, badge = 0 }) => (
@@ -93,17 +107,37 @@ const Sidebar = ({ className }: SidebarProps) => {
         </button>
       </div>
       
-      <div className="flex flex-col space-y-1 p-2 mt-2">
-        {routes.map((route) => (
-          <SidebarItem 
-            key={route.path} 
-            icon={route.icon} 
-            label={route.label} 
-            path={route.path} 
-            active={location.pathname === route.path} 
-            badge={route.badge || 0} 
-          />
-        ))}
+      <div className="flex flex-col space-y-1 p-2 mt-2 overflow-y-auto">
+        <div className="mb-2">
+          <p className={cn("px-4 py-1 text-xs uppercase text-gray-500 font-medium", collapsed && "hidden")}>
+            Main Navigation
+          </p>
+          {mainRoutes.map((route) => (
+            <SidebarItem 
+              key={route.path} 
+              icon={route.icon} 
+              label={route.label} 
+              path={route.path} 
+              active={location.pathname === route.path} 
+              badge={route.badge || 0} 
+            />
+          ))}
+        </div>
+        
+        <div className={cn("border-t border-gray-200 pt-2 mt-2", collapsed && "mx-2")}>
+          <p className={cn("px-4 py-1 text-xs uppercase text-gray-500 font-medium", collapsed && "hidden")}>
+            Solution Components
+          </p>
+          {solutionRoutes.map((route) => (
+            <SidebarItem 
+              key={route.path} 
+              icon={route.icon} 
+              label={route.label} 
+              path={route.path} 
+              active={location.pathname === route.path} 
+            />
+          ))}
+        </div>
       </div>
       
       <div className="mt-auto p-2">
@@ -127,7 +161,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   // Mobile sidebar
   const mobileSidebar = mobileMenuOpen && (
     <div className="md:hidden fixed inset-0 z-20 bg-black bg-opacity-50">
-      <div className="w-64 h-full bg-white shadow-lg">
+      <div className="w-64 h-full bg-white shadow-lg overflow-y-auto">
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
           <div className="flex items-center space-x-2">
             <span className="font-bold text-ss-blue-600 text-xl">शिक्षा</span>
@@ -139,19 +173,39 @@ const Sidebar = ({ className }: SidebarProps) => {
         </div>
         
         <div className="flex flex-col space-y-1 p-2 mt-2">
-          {routes.map((route) => (
-            <SidebarItem 
-              key={route.path} 
-              icon={route.icon} 
-              label={route.label} 
-              path={route.path} 
-              active={location.pathname === route.path} 
-              badge={route.badge || 0} 
-            />
-          ))}
+          <div className="mb-2">
+            <p className="px-4 py-1 text-xs uppercase text-gray-500 font-medium">
+              Main Navigation
+            </p>
+            {mainRoutes.map((route) => (
+              <SidebarItem 
+                key={route.path} 
+                icon={route.icon} 
+                label={route.label} 
+                path={route.path} 
+                active={location.pathname === route.path} 
+                badge={route.badge || 0} 
+              />
+            ))}
+          </div>
+          
+          <div className="border-t border-gray-200 pt-2 mt-2">
+            <p className="px-4 py-1 text-xs uppercase text-gray-500 font-medium">
+              Solution Components
+            </p>
+            {solutionRoutes.map((route) => (
+              <SidebarItem 
+                key={route.path} 
+                icon={route.icon} 
+                label={route.label} 
+                path={route.path} 
+                active={location.pathname === route.path} 
+              />
+            ))}
+          </div>
         </div>
         
-        <div className="mt-auto p-2">
+        <div className="mt-auto p-2 border-t border-gray-200">
           <SidebarItem icon={Settings} label="Settings" path="/settings" />
         </div>
       </div>
