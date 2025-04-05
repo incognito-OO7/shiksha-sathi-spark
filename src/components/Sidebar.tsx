@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   BookOpen, 
@@ -21,6 +22,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
   
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -30,8 +32,22 @@ const Sidebar = ({ className }: SidebarProps) => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
   
-  const SidebarItem = ({ icon: Icon, label, active = false, badge = 0 }) => (
-    <div 
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+  
+  const routes = [
+    { path: "/", label: "Class Dashboard", icon: BookOpen },
+    { path: "/assessment", label: "Assessment", icon: BarChart3 },
+    { path: "/record-class", label: "Record Class", icon: Headphones },
+    { path: "/parent-connect", label: "Parent Connect", icon: MessageSquare, badge: 2 },
+    { path: "/students", label: "Students", icon: Users },
+  ];
+  
+  const SidebarItem = ({ icon: Icon, label, path, active = false, badge = 0 }) => (
+    <Link 
+      to={path}
+      onClick={closeMobileMenu}
       className={cn(
         "flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-colors",
         active ? "bg-ss-blue-100 text-ss-blue-700" : "hover:bg-gray-100"
@@ -40,7 +56,7 @@ const Sidebar = ({ className }: SidebarProps) => {
       <div className="relative">
         <Icon size={20} className={active ? "text-ss-blue-600" : "text-gray-600"} />
         {badge > 0 && (
-          <span className="icon-badge bg-ss-red-500">
+          <span className="absolute -top-1 -right-1 flex items-center justify-center w-4 h-4 text-xs text-white bg-ss-red-500 rounded-full">
             {badge}
           </span>
         )}
@@ -50,7 +66,7 @@ const Sidebar = ({ className }: SidebarProps) => {
           {label}
         </span>
       )}
-    </div>
+    </Link>
   );
   
   // Sidebar for desktop 
@@ -78,15 +94,20 @@ const Sidebar = ({ className }: SidebarProps) => {
       </div>
       
       <div className="flex flex-col space-y-1 p-2 mt-2">
-        <SidebarItem icon={BookOpen} label="Class Dashboard" active={true} />
-        <SidebarItem icon={BarChart3} label="Assessment" />
-        <SidebarItem icon={Headphones} label="Record Class" />
-        <SidebarItem icon={MessageSquare} label="Parent Connect" badge={2} />
-        <SidebarItem icon={Users} label="Students" />
+        {routes.map((route) => (
+          <SidebarItem 
+            key={route.path} 
+            icon={route.icon} 
+            label={route.label} 
+            path={route.path} 
+            active={location.pathname === route.path} 
+            badge={route.badge || 0} 
+          />
+        ))}
       </div>
       
       <div className="mt-auto p-2">
-        <SidebarItem icon={Settings} label="Settings" />
+        <SidebarItem icon={Settings} label="Settings" path="/settings" />
       </div>
     </div>
   );
@@ -118,15 +139,20 @@ const Sidebar = ({ className }: SidebarProps) => {
         </div>
         
         <div className="flex flex-col space-y-1 p-2 mt-2">
-          <SidebarItem icon={BookOpen} label="Class Dashboard" active={true} />
-          <SidebarItem icon={BarChart3} label="Assessment" />
-          <SidebarItem icon={Headphones} label="Record Class" />
-          <SidebarItem icon={MessageSquare} label="Parent Connect" badge={2} />
-          <SidebarItem icon={Users} label="Students" />
+          {routes.map((route) => (
+            <SidebarItem 
+              key={route.path} 
+              icon={route.icon} 
+              label={route.label} 
+              path={route.path} 
+              active={location.pathname === route.path} 
+              badge={route.badge || 0} 
+            />
+          ))}
         </div>
         
         <div className="mt-auto p-2">
-          <SidebarItem icon={Settings} label="Settings" />
+          <SidebarItem icon={Settings} label="Settings" path="/settings" />
         </div>
       </div>
     </div>
