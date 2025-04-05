@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -10,7 +9,8 @@ import {
   MessageSquare, 
   Settings, 
   Menu, 
-  ArrowLeft
+  ArrowLeft,
+  Info
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -42,6 +42,7 @@ const Sidebar = ({ className }: SidebarProps) => {
     { path: "/record-class", label: "Record Class", icon: Headphones },
     { path: "/parent-connect", label: "Parent Connect", icon: MessageSquare, badge: 2 },
     { path: "/students", label: "Students", icon: Users },
+    { path: "/solution-overview", label: "Solution Overview", icon: Info },
   ];
   
   const SidebarItem = ({ icon: Icon, label, path, active = false, badge = 0 }) => (
