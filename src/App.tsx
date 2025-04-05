@@ -9,7 +9,6 @@ import Assessment from "./pages/Assessment";
 import RecordClassPage from "./pages/RecordClass";
 import ParentConnectPage from "./pages/ParentConnect";
 import Students from "./pages/Students";
-import SolutionOverview from "./pages/SolutionOverview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,7 +25,6 @@ const App = () => (
           <Route path="/record-class" element={<RecordClassPage />} />
           <Route path="/parent-connect" element={<ParentConnectPage />} />
           <Route path="/students" element={<Students />} />
-          <Route path="/solution-overview" element={<SolutionOverview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
